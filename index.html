@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>THE ROYAL ENGINES — BMW × Bugatti × Rolls-Royce</title>
+  <style>
+    :root {
+      color-scheme: dark light;
+      --ink: #0b0f14;
+      --ink-soft: #111827;
+      --cream: #f1ede2;
+      --gold: #d4af37;
+      --violet: #5a4a9c;
+      --royal-blue: #112b44;
+      --transition: all 260ms cubic-bezier(0.22, 1, 0.36, 1);
+      --radius: 18px;
+      --max-width: 1100px;
+    }
+
+    [data-theme="light"] {
+      --ink: #f5f5f5;
+      --ink-soft: #ffffff;
+      --cream: #0b0f14;
+      --royal-blue: #cfd7f5;
+      --violet: #8577d2;
+      color-scheme: light;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+      background: var(--ink);
+      color: var(--cream);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+
+    button:focus-visible,
+    a:focus-visible {
+      outline: 3px solid var(--gold);
+      outline-offset: 4px;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(11, 15, 20, 0.82);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+    }
+
+    header nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0.75rem 1.25rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .brand {
+      letter-spacing: 0.35rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--gold);
+    }
+
+    .toggle-group {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .toggle {
+      border: 1px solid rgba(212, 175, 55, 0.45);
+      padding: 0.35rem 0.8rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(212, 175, 55, 0.18), rgba(90, 74, 156, 0.15));
+      transition: var(--transition);
+    }
+
+    .toggle:hover {
+      background: rgba(212, 175, 55, 0.28);
+    }
+
+    main {
+      display: grid;
+      gap: 4rem;
+    }
+
+    section {
+      padding: 4rem 1.25rem;
+    }
+
+    .container {
+      margin: 0 auto;
+      width: min(100%, var(--max-width));
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      position: relative;
+      text-align: center;
+      background: radial-gradient(circle at top, rgba(212, 175, 55, 0.22), transparent 55%),
+        radial-gradient(circle at 20% 80%, rgba(90, 74, 156, 0.25), transparent 60%),
+        radial-gradient(circle at 80% 70%, rgba(17, 43, 68, 0.35), transparent 65%);
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(11, 15, 20, 0.4), transparent 40%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      padding: 3rem 1.5rem;
+      border-radius: calc(var(--radius) * 1.4);
+      border: 1px solid rgba(212, 175, 55, 0.28);
+      backdrop-filter: blur(10px);
+      background: rgba(11, 15, 20, 0.45);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.55);
+    }
+
+    .hero h1 {
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      line-height: 1.1;
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.6rem;
+    }
+
+    .hero h2 {
+      margin: 1rem 0 2.5rem;
+      font-size: clamp(1.1rem, 3.5vw, 1.9rem);
+      color: rgba(241, 237, 226, 0.85);
+      letter-spacing: 0.35rem;
+      text-transform: uppercase;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      padding: 0.85rem 1.8rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(212, 175, 55, 0.5), rgba(90, 74, 156, 0.45));
+      border: 1px solid rgba(212, 175, 55, 0.65);
+      font-weight: 600;
+      letter-spacing: 0.15rem;
+      text-transform: uppercase;
+      transition: var(--transition);
+    }
+
+    .cta:hover { transform: translateY(-2px) scale(1.01); }
+
+    .hero-text-animate {
+      display: grid;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: var(--transition);
+    }
+
+    .hero-text-animate[data-state="active"] {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .hero-text-animate span {
+      display: inline-block;
+      opacity: 0;
+      transform: translateY(25px);
+    }
+
+    .hero-text-animate[data-state="active"] span {
+      animation: rise 620ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+    }
+
+    .hero-text-animate[data-state="active"] span:nth-child(2) { animation-delay: 80ms; }
+    .hero-text-animate[data-state="active"] span:nth-child(3) { animation-delay: 160ms; }
+
+    @keyframes rise {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .family {
+      position: relative;
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .family .card-wrap {
+      display: grid;
+      gap: 1.5rem;
+    }
+
+    .character-card {
+      position: relative;
+      padding: 2.5rem 1.75rem;
+      border-radius: var(--radius);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.18), rgba(17, 43, 68, 0.45));
+      overflow: hidden;
+      transition: var(--transition);
+      box-shadow: 0 18px 38px rgba(0, 0, 0, 0.4);
+    }
+
+    .character-card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background: radial-gradient(circle at center, rgba(212, 175, 55, 0.35), transparent 60%);
+      opacity: 0;
+      transition: var(--transition);
+    }
+
+    .character-card:hover::before {
+      opacity: 1;
+    }
+
+    .character-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .character-card .silhouette {
+      width: clamp(90px, 35vw, 150px);
+      margin-inline: auto;
+      aspect-ratio: 3 / 1.3;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.6), rgba(17, 43, 68, 0.7));
+      border-radius: 80% 80% 30% 30%;
+      position: relative;
+      overflow: hidden;
+      display: grid;
+      place-items: center;
+    }
+
+    .character-card .silhouette svg {
+      width: 80%;
+      height: auto;
+      fill: rgba(11, 15, 20, 0.82);
+    }
+
+    .character-card h3 {
+      margin: 1.5rem 0 0.5rem;
+      font-size: 1.4rem;
+      letter-spacing: 0.25rem;
+      text-transform: uppercase;
+    }
+
+    .character-card p {
+      margin: 0;
+      font-size: 0.95rem;
+      color: rgba(241, 237, 226, 0.8);
+    }
+
+    .dialogues {
+      display: grid;
+      gap: 1rem;
+    }
+
+    .dialogue {
+      border-left: 3px solid var(--gold);
+      padding: 0.85rem 1.2rem;
+      background: rgba(17, 43, 68, 0.35);
+      border-radius: 0 14px 14px 0;
+    }
+
+    .dialogue strong { color: var(--gold); }
+
+    .palace {
+      position: relative;
+    }
+
+    .palace .columns {
+      position: relative;
+      padding: 3rem 1.25rem 4rem;
+      border-radius: calc(var(--radius) * 1.2);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: linear-gradient(160deg, rgba(17, 43, 68, 0.55), rgba(90, 74, 156, 0.45));
+      overflow: hidden;
+    }
+
+    .palace .columns::before,
+    .palace .columns::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 80px;
+      background: linear-gradient(180deg, rgba(212, 175, 55, 0.7), rgba(212, 175, 55, 0.2));
+      opacity: 0.25;
+    }
+
+    .palace .columns::before { left: 15%; }
+    .palace .columns::after { right: 15%; }
+
+    .carousel {
+      display: grid;
+      gap: 1.5rem;
+      position: relative;
+    }
+
+    .carousel-track {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 100%;
+      transition: transform 420ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    .slide {
+      min-height: 220px;
+      border-radius: var(--radius);
+      padding: 2.5rem 1.8rem;
+      background: linear-gradient(135deg, rgba(212, 175, 55, 0.15), rgba(17, 43, 68, 0.75));
+      display: grid;
+      gap: 1rem;
+      align-content: center;
+      text-align: center;
+      box-shadow: 0 16px 32px rgba(0, 0, 0, 0.35);
+    }
+
+    .slide h4 {
+      margin: 0;
+      text-transform: uppercase;
+      letter-spacing: 0.25rem;
+      font-size: 1.1rem;
+    }
+
+    .slide p { margin: 0; }
+
+    .carousel-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .carousel-controls button {
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      padding: 0.6rem 0.85rem;
+      min-width: 3rem;
+      background: rgba(11, 15, 20, 0.35);
+      transition: var(--transition);
+    }
+
+    .carousel-controls button:hover { background: rgba(212, 175, 55, 0.18); }
+
+    .carousel-dots {
+      display: flex;
+      gap: 0.5rem;
+      justify-content: center;
+      width: 100%;
+    }
+
+    .carousel-dots button {
+      width: 0.7rem;
+      height: 0.7rem;
+      border-radius: 50%;
+      padding: 0;
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      background: rgba(241, 237, 226, 0.18);
+    }
+
+    .carousel-dots button[aria-current="true"] {
+      background: var(--gold);
+      border-color: var(--gold);
+    }
+
+    .credits {
+      position: relative;
+    }
+
+    .credits-box {
+      border-radius: calc(var(--radius) * 1.1);
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      background: linear-gradient(180deg, rgba(17, 43, 68, 0.5), rgba(90, 74, 156, 0.35));
+      max-height: 260px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .credits-roll {
+      display: grid;
+      gap: 2rem;
+      padding: 3rem 1.5rem;
+      animation: roll 18s linear infinite;
+    }
+
+    .credits-roll p {
+      margin: 0;
+      text-align: center;
+      letter-spacing: 0.2rem;
+      text-transform: uppercase;
+    }
+
+    @keyframes roll {
+      0% { transform: translateY(100%); }
+      100% { transform: translateY(-100%); }
+    }
+
+    .credits-controls {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .credits-controls button {
+      border: 1px solid rgba(212, 175, 55, 0.4);
+      border-radius: 999px;
+      padding: 0.5rem 1.2rem;
+      background: rgba(11, 15, 20, 0.35);
+    }
+
+    .audio {
+      display: grid;
+      gap: 1rem;
+      text-align: center;
+    }
+
+    .audio-player {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.75rem;
+      border-radius: 999px;
+      border: 1px solid rgba(212, 175, 55, 0.3);
+      padding: 0.65rem 1.2rem;
+      background: rgba(17, 43, 68, 0.35);
+    }
+
+    .epilogue {
+      position: relative;
+      text-align: center;
+    }
+
+    .epilogue-card {
+      position: relative;
+      padding: 3rem 1.5rem;
+      border-radius: calc(var(--radius) * 1.2);
+      border: 1px solid rgba(212, 175, 55, 0.35);
+      background: linear-gradient(160deg, rgba(212, 175, 55, 0.15), rgba(90, 74, 156, 0.35));
+      box-shadow: 0 22px 40px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+    }
+
+    .epilogue-card::before {
+      content: "";
+      position: absolute;
+      inset: -10%;
+      background: radial-gradient(circle at center, rgba(212, 175, 55, 0.28), transparent 60%);
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .epilogue-card p {
+      position: relative;
+      margin: 0;
+      font-size: clamp(1.2rem, 4vw, 2rem);
+      letter-spacing: 0.3rem;
+      text-transform: uppercase;
+    }
+
+    .confetti {
+      position: absolute;
+      top: -10px;
+      left: calc(var(--x) * 100%);
+      width: 8px;
+      height: 14px;
+      background: linear-gradient(180deg, var(--gold), rgba(90, 74, 156, 0.8));
+      border-radius: 50% 50% 40% 40%;
+      animation: fall var(--duration, 6s) linear forwards;
+      animation-delay: var(--delay, 0s);
+      opacity: 0.8;
+    }
+
+    @keyframes fall {
+      0% { transform: translateY(0) scale(1); opacity: 0.8; }
+      80% { opacity: 1; }
+      100% { transform: translateY(160px) scale(0.7); opacity: 0; }
+    }
+
+    .confetti-toggle {
+      margin-top: 1.5rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    footer {
+      padding: 3rem 1.25rem;
+      background: rgba(11, 15, 20, 0.75);
+      border-top: 1px solid rgba(212, 175, 55, 0.2);
+    }
+
+    footer .container { display: grid; gap: 1.25rem; }
+
+    .guide {
+      border-radius: var(--radius);
+      border: 1px solid rgba(212, 175, 55, 0.25);
+      padding: 1.5rem;
+      background: rgba(17, 43, 68, 0.3);
+    }
+
+    ul { padding-left: 1.2rem; }
+
+    @media (min-width: 720px) {
+      .family .card-wrap {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .dialogues {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .carousel-controls { justify-content: space-between; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+      .hero-text-animate,
+      .hero-text-animate span,
+      .credits-roll {
+        animation: none !important;
+      }
+
+      .hero-text-animate,
+      .hero-text-animate span {
+        opacity: 1 !important;
+        transform: none !important;
+      }
+
+      .credits-roll { transform: none !important; }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <header>
+    <nav aria-label="Navigation principale">
+      <div class="brand" aria-label="THE ROYAL ENGINES">TRE</div>
+      <div class="toggle-group">
+        <button class="toggle" id="themeToggle" type="button" aria-pressed="false">Mode clair</button>
+        <button class="toggle" id="motionToggle" type="button" aria-pressed="true">Couper confettis</button>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-content container">
+        <h1 id="hero-title">THE ROYAL ENGINES</h1>
+        <h2>BMW × Bugatti × Rolls-Royce</h2>
+        <button class="cta" id="replayCredits" type="button">
+          <span aria-hidden="true">▶</span>
+          Revoir le générique
+        </button>
+        <div class="hero-text-animate" id="heroNarration" aria-live="polite">
+          <span>Un souffle royal illumine la nuit.</span>
+          <span>Trois moteurs, un seul battement.</span>
+          <span>Leur famille dépasse l'écran.</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="family" aria-labelledby="family-title">
+      <div class="container">
+        <h2 id="family-title">Famille des moteurs royaux</h2>
+        <p>Ils quittent la scène comme une constellation : chaque étoile brille de sa propre passion, mais toutes racontent une même légende.</p>
+        <div class="card-wrap" role="list">
+          <article class="character-card" role="listitem" data-brand="BMW">
+            <div class="silhouette" aria-hidden="true">
+              <svg viewBox="0 0 120 50" role="presentation">
+                <path d="M10 35 Q20 10 40 15 H80 Q100 10 110 35 L100 40 H20 Z"></path>
+              </svg>
+            </div>
+            <h3>BMW</h3>
+            <p>Le cœur bat avec précision, chaque note un hommage à ses racines bavaroises.</p>
+          </article>
+          <article class="character-card" role="listitem" data-brand="Bugatti">
+            <div class="silhouette" aria-hidden="true">
+              <svg viewBox="0 0 120 50" role="presentation">
+                <path d="M12 38 Q25 8 55 12 H85 Q105 8 108 38 L95 42 H25 Z"></path>
+              </svg>
+            </div>
+            <h3>Bugatti</h3>
+            <p>Lignes infinies et cadence féline, elle allume la nuit d'une élégance maghrébine.</p>
+          </article>
+          <article class="character-card" role="listitem" data-brand="Rolls">
+            <div class="silhouette" aria-hidden="true">
+              <svg viewBox="0 0 120 50" role="presentation">
+                <path d="M8 36 Q22 6 52 10 H90 Q110 6 112 36 L96 40 H24 Z"></path>
+              </svg>
+            </div>
+            <h3>Rolls-Royce</h3>
+            <p>Le velours du silence, la douceur d'une promesse, un luxe qui caresse l'âme.</p>
+          </article>
+        </div>
+        <div class="dialogues" aria-label="Répliques finales">
+          <div class="dialogue"><strong>BMW</strong> — « La puissance ne vaut rien sans le cœur. »</div>
+          <div class="dialogue"><strong>Bugatti</strong> — « Le style, c’est d’aimer sans limites. »</div>
+          <div class="dialogue"><strong>Rolls-Royce</strong> — « Même les plus grands naissent d’une étincelle d’amour. »</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="palace" aria-labelledby="palace-title">
+      <div class="container">
+        <h2 id="palace-title">Galerie « Palace »</h2>
+        <div class="columns">
+          <div class="carousel" role="region" aria-label="Carousel Palace">
+            <div class="carousel-track" id="carouselTrack">
+              <article class="slide" data-index="0">
+                <h4>Palais</h4>
+                <p>Colonnes dorées s'élançant vers les cieux, reflet d'une dynastie intemporelle.</p>
+              </article>
+              <article class="slide" data-index="1">
+                <h4>Lune</h4>
+                <p>Halo argenté sur carrosserie d'or, la nuit leur offre son royaume.</p>
+              </article>
+              <article class="slide" data-index="2">
+                <h4>Forêt bleue</h4>
+                <p>Brume azurée, parfums d'Atlas, un écho de mystère et de légendes berbères.</p>
+              </article>
+              <article class="slide" data-index="3">
+                <h4>Trône</h4>
+                <p>Le trône de lumière attend leurs courbes, symbole d'une royauté mécanique.</p>
+              </article>
+            </div>
+            <div class="carousel-controls">
+              <button type="button" class="carousel-prev" aria-label="Plan précédent">⟵</button>
+              <div class="carousel-dots" role="tablist" aria-label="Pagination du carousel">
+                <button type="button" data-slide="0" aria-current="true" aria-label="Voir plan Palais"></button>
+                <button type="button" data-slide="1" aria-label="Voir plan Lune"></button>
+                <button type="button" data-slide="2" aria-label="Voir plan Forêt bleue"></button>
+                <button type="button" data-slide="3" aria-label="Voir plan Trône"></button>
+              </div>
+              <button type="button" class="carousel-next" aria-label="Plan suivant">⟶</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="credits" aria-labelledby="credits-title">
+      <div class="container">
+        <h2 id="credits-title">Générique final</h2>
+        <div class="credits-box">
+          <div class="credits-roll" id="creditsRoll" aria-live="polite">
+            <p>Une production KNGSNK</p>
+            <p>Musique: Wake Up — KNGSNK</p>
+            <p>Scénario: Adel (StarYAM) &amp; KNGSNK Studios</p>
+            <p>BMW × Bugatti × Rolls-Royce — Une famille. Une légende.</p>
+          </div>
+        </div>
+        <div class="credits-controls">
+          <button type="button" id="creditsToggle" aria-pressed="true">⏸ Pause</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="audio" aria-labelledby="audio-title">
+      <div class="container">
+        <h2 id="audio-title">Ambiance sonore</h2>
+        <p id="audioStatus" role="status" aria-live="polite">Lecture prête.</p>
+        <div class="audio-player" role="group" aria-label="Contrôles audio">
+          <audio id="royalAudio" preload="auto">
+            <source src="assets/wake_up.mp3" type="audio/mpeg">
+            Votre navigateur ne supporte pas la lecture audio.
+          </audio>
+          <button type="button" id="audioPlay" aria-pressed="false">▶ Écouter</button>
+          <button type="button" id="audioMute" aria-pressed="false">🔇 Muet</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="epilogue" aria-labelledby="epilogue-title">
+      <div class="container">
+        <h2 id="epilogue-title">Epilogue</h2>
+        <div class="epilogue-card" id="epilogueCard">
+          <p>FIN — mais leur moteur continue de battre…</p>
+        </div>
+        <div class="confetti-toggle">
+          <button class="toggle" type="button" id="confettiToggle" aria-pressed="true">Confettis ✨</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>THE ROYAL ENGINES — BMW × Bugatti × Rolls-Royce. Une ode cinématographique au luxe qui rassemble.</p>
+      <section class="guide" aria-labelledby="guide-title">
+        <h2 id="guide-title">Guide de personnalisation rapide</h2>
+        <ul>
+          <li>Couleurs : modifiez les variables <code>--gold</code>, <code>--violet</code>, <code>--royal-blue</code> dans <code>:root</code> pour adapter la palette.</li>
+          <li>Textes : ajustez les paragraphes et titres directement dans les sections concernées ; chaque élément suit une structure claire.</li>
+          <li>Vitesse des animations : adaptez la propriété <code>animation-duration</code> des classes <code>.hero-text-animate</code> et <code>.credits-roll</code>, ainsi que la constante <code>CONFETTI_INTERVAL</code> dans le script.</li>
+          <li>Carousel : ajoutez ou retirez des <code>.slide</code> dans <code>.carousel-track</code> et mettez à jour les boutons de pagination correspondants.</li>
+        </ul>
+      </section>
+    </div>
+  </footer>
+
+  <script>
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    const body = document.body;
+    const themeToggle = document.getElementById('themeToggle');
+    const motionToggle = document.getElementById('motionToggle');
+    const replayCredits = document.getElementById('replayCredits');
+    const heroNarration = document.getElementById('heroNarration');
+    const cards = document.querySelectorAll('.character-card');
+    const carouselTrack = document.getElementById('carouselTrack');
+    const prevBtn = document.querySelector('.carousel-prev');
+    const nextBtn = document.querySelector('.carousel-next');
+    const dots = Array.from(document.querySelectorAll('.carousel-dots button'));
+    const creditsRoll = document.getElementById('creditsRoll');
+    const creditsToggle = document.getElementById('creditsToggle');
+    const audio = document.getElementById('royalAudio');
+    const audioPlay = document.getElementById('audioPlay');
+    const audioMute = document.getElementById('audioMute');
+    const audioStatus = document.getElementById('audioStatus');
+    const confettiToggle = document.getElementById('confettiToggle');
+    const epilogueCard = document.getElementById('epilogueCard');
+
+    let currentSlide = 0;
+    let creditsPaused = false;
+    let confettiInterval;
+    const CONFETTI_INTERVAL = 1500;
+
+    function updateThemeToggle() {
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      themeToggle.textContent = isDark ? 'Mode clair' : 'Mode sombre';
+      themeToggle.setAttribute('aria-pressed', (!isDark).toString());
+    }
+
+    themeToggle.addEventListener('click', () => {
+      const isDark = body.getAttribute('data-theme') === 'dark';
+      body.setAttribute('data-theme', isDark ? 'light' : 'dark');
+      updateThemeToggle();
+    });
+
+    updateThemeToggle();
+
+    replayCredits.addEventListener('click', () => {
+      heroNarration.dataset.state = 'inactive';
+      void heroNarration.offsetWidth;
+      heroNarration.dataset.state = 'active';
+    });
+
+    if (!prefersReducedMotion) {
+      cards.forEach((card) => {
+        card.addEventListener('pointermove', (event) => {
+          const rect = card.getBoundingClientRect();
+          const x = ((event.clientX - rect.left) / rect.width - 0.5) * 10;
+          const y = ((event.clientY - rect.top) / rect.height - 0.5) * 10;
+          card.style.transform = `translateY(-6px) rotateX(${y}deg) rotateY(${x}deg)`;
+        });
+
+        card.addEventListener('pointerleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    function setSlide(index) {
+      currentSlide = (index + dots.length) % dots.length;
+      carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.forEach((dot, i) => {
+        const active = i === currentSlide;
+        dot.setAttribute('aria-current', active);
+        dot.setAttribute('aria-pressed', active);
+      });
+    }
+
+    prevBtn.addEventListener('click', () => setSlide(currentSlide - 1));
+    nextBtn.addEventListener('click', () => setSlide(currentSlide + 1));
+    dots.forEach((dot) => {
+      dot.addEventListener('click', () => setSlide(Number(dot.dataset.slide)));
+      dot.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          setSlide(Number(dot.dataset.slide));
+        }
+      });
+    });
+
+    function pauseCredits() {
+      creditsRoll.style.animationPlayState = 'paused';
+      creditsToggle.textContent = '▶ Lecture';
+      creditsToggle.setAttribute('aria-pressed', 'false');
+      creditsPaused = true;
+    }
+
+    function playCredits() {
+      creditsRoll.style.animationPlayState = 'running';
+      creditsToggle.textContent = '⏸ Pause';
+      creditsToggle.setAttribute('aria-pressed', 'true');
+      creditsPaused = false;
+    }
+
+    if (prefersReducedMotion) {
+      pauseCredits();
+    }
+
+    creditsToggle.addEventListener('click', () => {
+      creditsPaused ? playCredits() : pauseCredits();
+    });
+
+    audioPlay.addEventListener('click', async () => {
+      if (audio.paused) {
+        try {
+          await audio.play();
+          audioPlay.textContent = '⏸ Pause';
+          audioPlay.setAttribute('aria-pressed', 'true');
+          audioStatus.textContent = 'Lecture en cours.';
+        } catch (error) {
+          audioStatus.textContent = "Audio indisponible : ajoutez le fichier assets/wake_up.mp3.";
+        }
+      } else {
+        audio.pause();
+        audioPlay.textContent = '▶ Écouter';
+        audioPlay.setAttribute('aria-pressed', 'false');
+        audioStatus.textContent = 'Lecture en pause.';
+      }
+    });
+
+    audioMute.addEventListener('click', () => {
+      audio.muted = !audio.muted;
+      audioMute.textContent = audio.muted ? '🔈 Activer' : '🔇 Muet';
+      audioMute.setAttribute('aria-pressed', audio.muted.toString());
+      audioStatus.textContent = audio.muted ? 'Audio en sourdine.' : 'Son activé.';
+    });
+
+    audio.addEventListener('error', () => {
+      audioStatus.textContent = "Audio manquant : placez assets/wake_up.mp3 pour l'activer.";
+    });
+
+    function createConfetti() {
+      if (prefersReducedMotion) return;
+      const fragment = document.createDocumentFragment();
+      for (let i = 0; i < 12; i++) {
+        const sparkle = document.createElement('span');
+        sparkle.className = 'confetti';
+        sparkle.style.setProperty('--x', Math.random());
+        sparkle.style.setProperty('--delay', `${Math.random() * 0.5}s`);
+        sparkle.style.setProperty('--duration', `${5 + Math.random() * 4}s`);
+        sparkle.addEventListener('animationend', () => sparkle.remove());
+        fragment.appendChild(sparkle);
+      }
+      epilogueCard.appendChild(fragment);
+    }
+
+    function toggleConfetti(active) {
+      clearInterval(confettiInterval);
+      confettiToggle.setAttribute('aria-pressed', active.toString());
+      confettiToggle.textContent = active ? 'Confettis ✨' : 'Confettis ✨ (off)';
+      motionToggle.setAttribute('aria-pressed', active.toString());
+      motionToggle.textContent = active ? 'Couper confettis' : 'Activer confettis';
+      if (active) {
+        createConfetti();
+        confettiInterval = setInterval(createConfetti, CONFETTI_INTERVAL);
+      } else {
+        epilogueCard.querySelectorAll('.confetti').forEach((node) => node.remove());
+      }
+    }
+
+    confettiToggle.addEventListener('click', () => {
+      const isActive = confettiToggle.getAttribute('aria-pressed') === 'true';
+      toggleConfetti(!isActive);
+    });
+
+    motionToggle.addEventListener('click', () => {
+      const isActive = motionToggle.getAttribute('aria-pressed') === 'true';
+      const nextState = !isActive;
+      toggleConfetti(nextState);
+      if (nextState) {
+        playCredits();
+      } else {
+        pauseCredits();
+      }
+    });
+
+    if (!prefersReducedMotion) {
+      toggleConfetti(true);
+    } else {
+      confettiToggle.setAttribute('aria-pressed', 'false');
+      confettiToggle.textContent = 'Confettis ✨ (off)';
+      motionToggle.setAttribute('aria-pressed', 'false');
+      motionToggle.textContent = 'Activer confettis';
+    }
+
+    heroNarration.dataset.state = 'active';
+  </script>
+</body>
+</html>
